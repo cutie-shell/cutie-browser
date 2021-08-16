@@ -1,0 +1,11 @@
+*.o
+.qmake.stash
+Makefile
+qrc_*.cpp
+moc_*
+*interface.cpp
+*interface.h
+*adaptor.cpp
+*adaptor.h
+*.so
+cutie-browser

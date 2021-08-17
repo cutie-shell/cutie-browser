@@ -111,7 +111,7 @@ Window {
 
         Rectangle {
             id: urlBar
-            height: 40
+            height: 36
             color: (atmospheresHandler.variant == "dark") ? "#ffffff" : "#000000"
             border.width: 0; border.color: "#2E3440";
             visible: true
@@ -119,7 +119,7 @@ Window {
                 top: parent.top
                 left: forwardButton.right
                 right: hamburger.left
-                leftMargin: 2; topMargin: 4; rightMargin: 10;
+                leftMargin: 2; topMargin: 6; rightMargin: 10;
             }
             radius: 5
             clip: true
@@ -130,7 +130,7 @@ Window {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 anchors.right: parent.right
-                font.pixelSize: 28
+                font.pixelSize: 18
                 textColor: (atmospheresHandler.variant == "dark") ? "#000000" : "#ffffff"
                 inputMethodHints: Qt.ImhNoAutoUppercase // url hint 
                 clip: true
@@ -225,11 +225,13 @@ Window {
         anchors.rightMargin: 0
         anchors.bottomMargin: 0
         anchors.leftMargin: 0
-        anchors.topMargin: 1
+        anchors.topMargin: 0
         anchors { top: headerBar.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
         url: "https://duckduckgo.com"
+        
         profile: WebEngineProfile {
             offTheRecord: true
+            httpUserAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1"
         }
         onLoadingChanged: {
             if (!urlText.activeFocus) {

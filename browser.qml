@@ -63,12 +63,16 @@ Window {
 
         Item {
             id: backButton
-            width: 40; height: 40; anchors { left: headerBar.left; leftMargin: 2; margins: 2; top: parent.top; topMargin: 4 }
+            width: 30
+            height: 30 
+            anchors.left: parent.left
+            anchors.leftMargin: 7
+            anchors.verticalCenter: parent.verticalCenter
             Text {
                 id: backButtonIcon
                 color: (atmospheresHandler.variant == "dark") ? "#ffffff" : "#000000"
                 text: "\uF053"
-                font { family: icon.name; pixelSize: 36 }
+                font { family: icon.name; pixelSize: 28 }
                 anchors.fill: parent
                 horizontalAlignment: Text.AlignHCenter
             }
@@ -84,16 +88,16 @@ Window {
 
         Item {
             id: forwardButton
-            width: 40
-            height: 40
+            width: 30
+            height: 30
             anchors.left: backButton.right
-            anchors.top: parent.top
-            anchors.topMargin: 4
+            anchors.leftMargin: 7
+            anchors.verticalCenter: parent.verticalCenter
             Text {
                 id: backButtonIcon1
                 color: (atmospheresHandler.variant == "dark") ? "#ffffff" : "#000000"
                 text: "\uf054"
-                font.pixelSize: 36
+                font.pixelSize: 28
                 font.family: icon.name
                 anchors.fill: parent
                 horizontalAlignment: Text.AlignHCenter
@@ -116,11 +120,12 @@ Window {
             border.width: 0; border.color: "#2E3440";
             visible: true
             anchors {
-                top: parent.top
                 left: forwardButton.right
                 right: hamburger.left
-                leftMargin: 2; topMargin: 6; rightMargin: 10;
+                leftMargin: 7 
+                rightMargin: 10
             }
+            anchors.verticalCenter: parent.verticalCenter
             radius: 5
             clip: true
 
@@ -171,12 +176,16 @@ Window {
 
         Item {
             id: hamburger
-            width: 40; height: 40; anchors { right: headerBar.right; margins: 2; top: parent.top; topMargin: 4; rightMargin: 10; }
+            width: 30
+            height: 30
+            anchors.right: parent.right
+            anchors.rightMargin: 10
+            anchors.verticalCenter: parent.verticalCenter
             Text {
                 id: iconham
                 color: (atmospheresHandler.variant == "dark") ? "#ffffff" : "#000000"
                 text: "\uf0c9"
-                font.pixelSize: 36
+                font.pixelSize: 28
                 font.family: icon.name
                 anchors.fill: parent
                 horizontalAlignment: Text.AlignHCenter

@@ -2,7 +2,7 @@
 Version=1.0
 Type=Application
 Name=Browser
-Exec=env EGL_PLATFORM=hwcomposer cutie-browser
+Exec=cutie-browser
 TryExec=cutie-browser
 Icon=cutie-browser
 Terminal=false

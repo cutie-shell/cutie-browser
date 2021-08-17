@@ -7,6 +7,7 @@ import QtQuick.Controls.Styles 1.4
 import Cutie 1.0
 
 Window {
+    id: w
     title: webview.title
     visible: true
     color: "transparent"
@@ -53,20 +54,107 @@ Window {
     }
 
     Rectangle { 
-        id: headerBar  
+        id: headerBar
+        height: 48
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        color: "transparent"
+
+        Rectangle {
+            id: urlBar
+            height: 36
+            color: (atmospheresHandler.variant == "dark") ? "#ffffff" : "#000000"
+            border.width: 0; border.color: "#2E3440";
+            visible: true
+            anchors.left: parent.left
+            anchors.right: hamburger.left
+            anchors.leftMargin: 10
+            anchors.rightMargin: 10
+            anchors.verticalCenter: parent.verticalCenter
+            radius: 10
+            clip: true
+
+            TextField { 
+                id: urlText
+                text: ""
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.right: parent.right
+                font.pixelSize: 18
+                textColor: (atmospheresHandler.variant == "dark") ? "#000000" : "#ffffff"
+                inputMethodHints: Qt.ImhNoAutoUppercase
+                clip: true
+                font.family: mainFont.name
+
+                style: TextFieldStyle {
+                    background: Rectangle {
+                        color: "transparent"
+                    }
+                }
+
+                onAccepted: { 
+                    webview.url = fixUrl(urlText.text);
+                }
+
+                onActiveFocusChanged: { 
+                    if (urlText.activeFocus) {
+                        urlText.selectAll();
+                        Qt.inputMethod.show();
+                    } else {
+                        parent.border.color = "#2E3440"; parent.border.width = 0;
+                    }
+                }
+            }
+        }
+        Rectangle {
+            id: urlProgressBar
+            height: 2
+            visible: webview.loadProgress < 100
+            width: parent.width * (webview.loadProgress / 100)
+            anchors.bottom: headerBar.bottom
+            anchors.left: parent.left
+            color: "#bf616a"
+        }
+
+        Item {
+            id: hamburger
+            width: 30
+            height: 30
+            anchors.right: parent.right
+            anchors.rightMargin: 10
+            anchors.verticalCenter: parent.verticalCenter
+
+            Text {
+                id: iconham
+                color: (atmospheresHandler.variant == "dark") ? "#ffffff" : "#000000"
+                text: "\uf0c9"
+                font.pixelSize: 28
+                font.family: icon.name
+                anchors.fill: parent
+                horizontalAlignment: Text.AlignHCenter
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                anchors.margins: -1
+            }
+        }
+    }
+
+    Rectangle { 
+        id: footerBar  
         width: parent.width
         height: 48
-        anchors { top: parent.top; left: parent.left }
+        anchors { bottom: parent.bottom; left: parent.left }
         color: "transparent"
-        anchors.leftMargin: 0
-        anchors.topMargin: 0
 
         Item {
             id: backButton
             width: 30
             height: 30 
             anchors.left: parent.left
-            anchors.leftMargin: 7
+            anchors.leftMargin: 10
             anchors.verticalCenter: parent.verticalCenter
             Text {
                 id: backButtonIcon
@@ -78,11 +166,10 @@ Window {
             }
 
             MouseArea { 
-                anchors.fill: parent; anchors.margins: -1; 
+                anchors.fill: parent
+                anchors.margins: -1 
                 enabled: webview.canGoBack 
-             //   onPressed: backButtonIcon.color = "#bf616a";
                 onClicked: { webview.goBack() }
-             //   onReleased: backButtonIcon.color = "#434C5E";
             }
         }
 
@@ -91,7 +178,7 @@ Window {
             width: 30
             height: 30
             anchors.left: backButton.right
-            anchors.leftMargin: 7
+            anchors.leftMargin: 10
             anchors.verticalCenter: parent.verticalCenter
             Text {
                 id: backButtonIcon1
@@ -106,85 +193,22 @@ Window {
             MouseArea {
                 anchors.fill: parent
                 anchors.margins: -1
-             //   onPressed: backButtonIcon1.color = "#bf616a"
                 enabled: webview.canGoForward
                 onClicked: { webview.goForward() }
-               // onReleased: backButtonIcon1.color = "#434C5E"
             }
-        }
-
-        Rectangle {
-            id: urlBar
-            height: 36
-            color: (atmospheresHandler.variant == "dark") ? "#ffffff" : "#000000"
-            border.width: 0; border.color: "#2E3440";
-            visible: true
-            anchors {
-                left: forwardButton.right
-                right: hamburger.left
-                leftMargin: 7 
-                rightMargin: 10
-            }
-            anchors.verticalCenter: parent.verticalCenter
-            radius: 5
-            clip: true
-
-            TextField { 
-                id: urlText
-                text: ""
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.left
-                anchors.right: parent.right
-                font.pixelSize: 18
-                textColor: (atmospheresHandler.variant == "dark") ? "#000000" : "#ffffff"
-                inputMethodHints: Qt.ImhNoAutoUppercase // url hint 
-                clip: true
-                style: TextFieldStyle {
-                    background: Rectangle {
-                        color: "transparent"
-                    }
-                }
-                
-                font.family: mainFont.name
-
-                onAccepted: { 
-                    webview.url = fixUrl(urlText.text);
-                }
-                onActiveFocusChanged: { 
-                    if (urlText.activeFocus) {
-                        urlText.selectAll();
-                        Qt.inputMethod.show();
-                    } else {
-                        parent.border.color = "#2E3440"; parent.border.width = 0;
-                    }
-                }
-                onTextChanged: {
-                    //if (urlText.activeFocus && urlText.text !== "") {
-                    //    Tab.queryHistory(urlText.text)
-                    //} else { historyModel.clear() }
-                }
-            }
-        }
-        Rectangle {
-            id: urlProgressBar
-            height: 1
-            visible: webview.loadProgress < 100
-            width: parent.width * (webview.loadProgress/100)
-            anchors { bottom: headerBar.bottom; left: parent.left }
-            color: "#bf616a"
         }
 
         Item {
-            id: hamburger
+            id: newTabButton
             width: 30
             height: 30
             anchors.right: parent.right
             anchors.rightMargin: 10
             anchors.verticalCenter: parent.verticalCenter
             Text {
-                id: iconham
+                id: newTabButtonIcon
                 color: (atmospheresHandler.variant == "dark") ? "#ffffff" : "#000000"
-                text: "\uf0c9"
+                text: "\uf067"
                 font.pixelSize: 28
                 font.family: icon.name
                 anchors.fill: parent
@@ -194,10 +218,9 @@ Window {
             MouseArea {
                 anchors.fill: parent
                 anchors.margins: -1
-              //  onPressed: iconham.color = "#bf616a"
-             //   enabled: webview.canGoBack
-            //    onClicked: { webview.goBack() }
-             //   onReleased: iconham.color = "#434C5E"
+                onClicked: { 
+                    mainItem.newTab();
+                }
             }
         }
     }
@@ -235,7 +258,7 @@ Window {
         anchors.bottomMargin: 0
         anchors.leftMargin: 0
         anchors.topMargin: 0
-        anchors { top: headerBar.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
+        anchors { top: headerBar.bottom; left: parent.left; right: parent.right; bottom: footerBar.top }
         url: "https://start.duckduckgo.com"
         
         profile: WebEngineProfile {

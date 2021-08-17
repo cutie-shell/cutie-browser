@@ -227,7 +227,7 @@ Window {
         anchors.leftMargin: 0
         anchors.topMargin: 0
         anchors { top: headerBar.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
-        url: "https://duckduckgo.com"
+        url: "https://start.duckduckgo.com"
         
         profile: WebEngineProfile {
             offTheRecord: true

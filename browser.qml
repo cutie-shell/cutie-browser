@@ -60,6 +60,54 @@ Window {
         anchors.left: parent.left
         anchors.right: parent.right
         color: "transparent"
+        Item {
+            id: backButton
+            width: 30
+            height: 30
+            anchors.left: parent.left
+            anchors.leftMargin: 10
+            anchors.verticalCenter: parent.verticalCenter
+            Text {
+                id: backButtonIcon
+                color: (atmospheresHandler.variant == "dark") ? "#ffffff" : "#000000"
+                text: "\uF053"
+                font { family: icon.name; pixelSize: 28 }
+                anchors.fill: parent
+                horizontalAlignment: Text.AlignHCenter
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                anchors.margins: -1
+                enabled: webview.canGoBack
+                onClicked: { webview.goBack() }
+            }
+        }
+
+        Item {
+            id: forwardButton
+            width: 30
+            height: 30
+            anchors.left: backButton.right
+            anchors.leftMargin: 10
+            anchors.verticalCenter: parent.verticalCenter
+            Text {
+                id: backButtonIcon1
+                color: (atmospheresHandler.variant == "dark") ? "#ffffff" : "#000000"
+                text: "\uf054"
+                font.pixelSize: 28
+                font.family: icon.name
+                anchors.fill: parent
+                horizontalAlignment: Text.AlignHCenter
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                anchors.margins: -1
+                enabled: webview.canGoForward
+                onClicked: { webview.goForward() }
+            }
+        }
 
         Rectangle {
             id: urlBar
@@ -67,8 +115,8 @@ Window {
             color: (atmospheresHandler.variant == "dark") ? "#ffffff" : "#000000"
             border.width: 0; border.color: "#2E3440";
             visible: true
-            anchors.left: parent.left
-            anchors.right: hamburger.left
+            anchors.left: forwardButton.right
+            anchors.right: newTabButton.left
             anchors.leftMargin: 10
             anchors.rightMargin: 10
             anchors.verticalCenter: parent.verticalCenter
@@ -118,87 +166,6 @@ Window {
         }
 
         Item {
-            id: hamburger
-            width: 30
-            height: 30
-            anchors.right: parent.right
-            anchors.rightMargin: 10
-            anchors.verticalCenter: parent.verticalCenter
-
-            Text {
-                id: iconham
-                color: (atmospheresHandler.variant == "dark") ? "#ffffff" : "#000000"
-                text: "\uf0c9"
-                font.pixelSize: 28
-                font.family: icon.name
-                anchors.fill: parent
-                horizontalAlignment: Text.AlignHCenter
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                anchors.margins: -1
-            }
-        }
-    }
-
-    Rectangle { 
-        id: footerBar  
-        width: parent.width
-        height: 48
-        anchors { bottom: parent.bottom; left: parent.left }
-        color: "transparent"
-
-        Item {
-            id: backButton
-            width: 30
-            height: 30 
-            anchors.left: parent.left
-            anchors.leftMargin: 10
-            anchors.verticalCenter: parent.verticalCenter
-            Text {
-                id: backButtonIcon
-                color: (atmospheresHandler.variant == "dark") ? "#ffffff" : "#000000"
-                text: "\uF053"
-                font { family: icon.name; pixelSize: 28 }
-                anchors.fill: parent
-                horizontalAlignment: Text.AlignHCenter
-            }
-
-            MouseArea { 
-                anchors.fill: parent
-                anchors.margins: -1 
-                enabled: webview.canGoBack 
-                onClicked: { webview.goBack() }
-            }
-        }
-
-        Item {
-            id: forwardButton
-            width: 30
-            height: 30
-            anchors.left: backButton.right
-            anchors.leftMargin: 10
-            anchors.verticalCenter: parent.verticalCenter
-            Text {
-                id: backButtonIcon1
-                color: (atmospheresHandler.variant == "dark") ? "#ffffff" : "#000000"
-                text: "\uf054"
-                font.pixelSize: 28
-                font.family: icon.name
-                anchors.fill: parent
-                horizontalAlignment: Text.AlignHCenter
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                anchors.margins: -1
-                enabled: webview.canGoForward
-                onClicked: { webview.goForward() }
-            }
-        }
-
-        Item {
             id: newTabButton
             width: 30
             height: 30
@@ -218,12 +185,14 @@ Window {
             MouseArea {
                 anchors.fill: parent
                 anchors.margins: -1
-                onClicked: { 
+                onClicked: {
                     mainItem.newTab();
                 }
             }
         }
+
     }
+
 
     WebEngineView {
         id: webview
@@ -258,7 +227,7 @@ Window {
         anchors.bottomMargin: 0
         anchors.leftMargin: 0
         anchors.topMargin: 0
-        anchors { top: headerBar.bottom; left: parent.left; right: parent.right; bottom: footerBar.top }
+        anchors { top: headerBar.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
         url: "https://start.duckduckgo.com"
         
         profile: WebEngineProfile {

@@ -6,11 +6,9 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import Cutie 1.0
 
-Window {
+CutieWindow {
     id: w
     title: webview.title
-    visible: true
-    color: "transparent"
 
     function fixUrl(url) {
         url = url.replace( /^\s+/, "").replace( /\s+$/, ""); // remove white space
@@ -29,28 +27,9 @@ Window {
         else { return url;}
     }
 
-    Atmosphere {
-        id: atmospheresHandler
-    }
-
     FontLoader {
         id: icon
         source: "qrc:/fonts/Font Awesome 5 Free-Solid-900.otf"
-    }
-
-    FontLoader {
-        id: mainFont
-        source: "qrc:/fonts/Raleway-Regular.ttf"
-    }
-
-    FontLoader {
-        id: lightFont
-        source: "qrc:/fonts/Raleway-ExtraLight.ttf"
-    }
-
-    FontLoader {
-        id: boldFont
-        source: "qrc:/fonts/Raleway-Black.ttf"
     }
 
     Rectangle { 
@@ -133,7 +112,7 @@ Window {
                 textColor: (atmospheresHandler.variant == "dark") ? "#000000" : "#ffffff"
                 inputMethodHints: Qt.ImhNoAutoUppercase
                 clip: true
-                font.family: mainFont.name
+                font.family: "Lato"
 
                 style: TextFieldStyle {
                     background: Rectangle {

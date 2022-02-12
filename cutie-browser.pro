@@ -26,7 +26,4 @@ else: unix:!android: target.path = /usr/bin
 desktopfile.files = cutie-browser.desktop
 desktopfile.path = /usr/share/applications/
 
-icon.files = cutie-browser.svg
-icon.path = /usr/share/icons/hicolor/scalable/apps/
-
-INSTALLS += desktopfile icon
+INSTALLS += desktopfile

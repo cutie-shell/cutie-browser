@@ -6,9 +6,8 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import Cutie 1.0
 
-CutieWindow {
+CutiePage {
     id: w
-    title: webview.title
 
     function fixUrl(url) {
         url = url.replace( /^\s+/, "").replace( /\s+$/, ""); // remove white space
@@ -34,25 +33,24 @@ CutieWindow {
 
     Rectangle { 
         id: headerBar
-        height: 48
+        height: 7 * dpi.value
+        anchors.topMargin: 7 * dpi.value
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
         color: "transparent"
         Item {
             id: backButton
-            width: 30
-            height: 30
+            width: 4 * dpi.value
+            height: width
             anchors.left: parent.left
-            anchors.leftMargin: 10
+            anchors.leftMargin: dpi.value
             anchors.verticalCenter: parent.verticalCenter
-            Text {
+            CutieLabel {
                 id: backButtonIcon
-                color: (atmospheresHandler.variant == "dark") ? "#ffffff" : "#000000"
                 text: "\uF053"
-                font { family: icon.name; pixelSize: 28 }
+                font { family: icon.name }
                 anchors.fill: parent
-                horizontalAlignment: Text.AlignHCenter
             }
 
             MouseArea {
@@ -65,19 +63,16 @@ CutieWindow {
 
         Item {
             id: forwardButton
-            width: 30
-            height: 30
+            width: 4 * dpi.value
+            height: width
             anchors.left: backButton.right
-            anchors.leftMargin: 10
+            anchors.leftMargin: dpi.value
             anchors.verticalCenter: parent.verticalCenter
-            Text {
+            CutieLabel {
                 id: backButtonIcon1
-                color: (atmospheresHandler.variant == "dark") ? "#ffffff" : "#000000"
                 text: "\uf054"
-                font.pixelSize: 28
                 font.family: icon.name
                 anchors.fill: parent
-                horizontalAlignment: Text.AlignHCenter
             }
 
             MouseArea {
@@ -88,37 +83,24 @@ CutieWindow {
             }
         }
 
-        Rectangle {
+        Item {
             id: urlBar
-            height: 36
-            color: (atmospheresHandler.variant == "dark") ? "#ffffff" : "#000000"
-            border.width: 0; border.color: "#2E3440";
+            height: 5 * dpi.value
             visible: true
             anchors.left: forwardButton.right
-            anchors.right: newTabButton.left
-            anchors.leftMargin: 10
-            anchors.rightMargin: 10
-            anchors.verticalCenter: parent.verticalCenter
-            radius: 10
+            anchors.right: parent.right
+            anchors.leftMargin: dpi.value
+            anchors.rightMargin: dpi.value
             clip: true
+            anchors.verticalCenter: parent.verticalCenter
 
-            TextField { 
+            CutieTextField { 
                 id: urlText
                 text: ""
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 anchors.right: parent.right
-                font.pixelSize: 18
-                textColor: (atmospheresHandler.variant == "dark") ? "#000000" : "#ffffff"
-                inputMethodHints: Qt.ImhNoAutoUppercase
                 clip: true
-                font.family: "Lato"
-
-                style: TextFieldStyle {
-                    background: Rectangle {
-                        color: "transparent"
-                    }
-                }
 
                 onAccepted: { 
                     webview.url = fixUrl(urlText.text);
@@ -136,38 +118,12 @@ CutieWindow {
         }
         Rectangle {
             id: urlProgressBar
-            height: 2
+            height: dpi.value / 2
             visible: webview.loadProgress < 100
             width: parent.width * (webview.loadProgress / 100)
             anchors.bottom: headerBar.bottom
             anchors.left: parent.left
             color: "#bf616a"
-        }
-
-        Item {
-            id: newTabButton
-            width: 30
-            height: 30
-            anchors.right: parent.right
-            anchors.rightMargin: 10
-            anchors.verticalCenter: parent.verticalCenter
-            Text {
-                id: newTabButtonIcon
-                color: (atmospheresHandler.variant == "dark") ? "#ffffff" : "#000000"
-                text: "\uf067"
-                font.pixelSize: 28
-                font.family: icon.name
-                anchors.fill: parent
-                horizontalAlignment: Text.AlignHCenter
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                anchors.margins: -1
-                onClicked: {
-                    mainItem.newTab();
-                }
-            }
         }
 
     }
@@ -202,12 +158,12 @@ CutieWindow {
         settings.javascriptEnabled: true
         settings.autoLoadImages: true
         settings.accelerated2dCanvasEnabled: true
-        anchors.rightMargin: 0
-        anchors.bottomMargin: 0
-        anchors.leftMargin: 0
-        anchors.topMargin: 0
-        anchors { top: headerBar.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
+        anchors.top: headerBar.bottom
         url: "https://start.duckduckgo.com"
+        scale: dpi.value / 8
+        width: 8*parent.width / dpi.value
+        height: 8*(parent.height - headerBar.height) / dpi.value
+        transformOrigin: Item.TopLeft
         
         profile: WebEngineProfile {
             offTheRecord: true

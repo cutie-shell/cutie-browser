@@ -4,6 +4,6 @@ Type=Application
 Name=Browser
 Exec=cutie-browser
 TryExec=cutie-browser
-Icon=cutie-browser
+Icon=browser
 Terminal=false
 StartupNotify=false

@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>browser.qml</file>
+        <file>Browser.qml</file>
     </qresource>
 </RCC>

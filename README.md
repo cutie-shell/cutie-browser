@@ -9,10 +9,6 @@ make
 sudo make install
 ```
 
-## Running
-
-After installation the app will show up in the shell's launcher. You may need to refresh the launcher by pulling down from the middle of the launcher.
-
 ## Troubleshooting
 
 If you are on Droidian, you will have to add the following line to your apt sources:

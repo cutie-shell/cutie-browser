@@ -1,16 +1,16 @@
-import QtQuick 2.14
+import QtQuick 2.15
+import QtQuick.Window 2.15
+import QtQuick.Controls 2.15
 import Cutie 1.0
 
-Item {
-    id: mainItem
+CutieWindow {
+    id: window
+    width: 640
+    height: 480
+    visible: true
+    title: qsTr("Browser")
 
-    function newTab() {
-        var component = Qt.createComponent("browser.qml");
-        var window = component.createObject(mainItem);
-        window.show()
-    }
-
-    Component.onCompleted: {
-        newTab();
+    initialPage: Component {
+        Browser {}
     }
 }

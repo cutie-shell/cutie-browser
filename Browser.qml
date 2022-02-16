@@ -32,7 +32,7 @@ CutiePage {
     Rectangle { 
         id: headerBar
         height: 7 * dpi.value
-        anchors.topMargin: 7 * dpi.value
+        anchors.topMargin: dpi.value * 2
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right

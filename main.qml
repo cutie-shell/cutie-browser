@@ -38,13 +38,12 @@ CutieWindow {
             source: "qrc:/fonts/Font Awesome 5 Free-Solid-900.otf"
         }
 
-        Rectangle { 
+        Item { 
             id: headerBar
             height: 44
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.right: parent.right
-            color: "transparent"
             Item {
                 id: backButton
                 width: 28
@@ -52,7 +51,7 @@ CutieWindow {
                 anchors.left: parent.left
                 anchors.leftMargin: 8
                 anchors.verticalCenter: parent.verticalCenter
-                Text {
+                CutieLabel {
                     id: backButtonIcon
                     text: "\uF053"
                     font { 
@@ -60,7 +59,6 @@ CutieWindow {
                         pixelSize: 28
                     }
                     anchors.fill: parent
-                    color: (Atmosphere.variant == "dark") ? "white" : "black"
                 }
 
                 MouseArea {
@@ -78,7 +76,7 @@ CutieWindow {
                 anchors.left: backButton.right
                 anchors.leftMargin: 8
                 anchors.verticalCenter: parent.verticalCenter
-                Text {
+                CutieLabel {
                     id: backButtonIcon1
                     text: "\uf054"
                     font { 
@@ -86,7 +84,6 @@ CutieWindow {
                         pixelSize: 28
                     }
                     anchors.fill: parent
-                    color: (Atmosphere.variant == "dark") ? "white" : "black"
                 }
 
                 MouseArea {
@@ -97,44 +94,29 @@ CutieWindow {
                 }
             }
 
-            Rectangle {
-                id: urlBar
-                color: (Atmosphere.variant == "dark") ? "#ffffff" : "#000000"
-                radius: 8
-                height: 40
-                visible: true
+            CutieTextField {
+                id: urlText
                 anchors.left: forwardButton.right
                 anchors.right: parent.right
                 anchors.rightMargin: 8
-                clip: true
                 anchors.verticalCenter: parent.verticalCenter
+                text: ""
 
-                TextField { 
-                    id: urlText
-                    text: ""
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    clip: true
-                    background: Item { }
-                    color: (Atmosphere.variant == "dark") ? "#000000" : "#ffffff"
-
-                    Connections {
-                        target: window
-                        function onBrowserURLChanged () {
-                            urlText.text = window.browserURL;
-                        }
+                Connections {
+                    target: window
+                    function onBrowserURLChanged () {
+                        urlText.text = window.browserURL;
                     }
+                }
 
-                    onAccepted: { 
-                        webview.url = iPage.fixUrl(urlText.text);
-                    }
+                onAccepted: { 
+                    webview.url = iPage.fixUrl(urlText.text);
+                }
 
-                    onActiveFocusChanged: { 
-                        if (urlText.activeFocus) {
-                            urlText.selectAll();
-                            Qt.inputMethod.show();
-                        }
+                onActiveFocusChanged: { 
+                    if (urlText.activeFocus) {
+                        urlText.selectAll();
+                        Qt.inputMethod.show();
                     }
                 }
             }

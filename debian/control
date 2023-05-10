@@ -20,5 +20,5 @@ Package: cutie-browser
 Architecture: any
 Multi-Arch: foreign
 Pre-Depends: ${misc:Pre-Depends}
-Depends: ${misc:Depends}, ${shlibs:Depends}, qml-module-cutie, qml6-module-qtwebengine
+Depends: ${misc:Depends}, ${shlibs:Depends}, qml6-module-cutie, qml6-module-qtwebengine
 Description: This package contains Cutie's default browser.

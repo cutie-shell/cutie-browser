@@ -8,3 +8,5 @@ TryExec=/usr/bin/cutie-browser
 Icon=cutie-browser
 Terminal=false
 StartupNotify=false
+Comment=Web Browser
+Categories=Network;WebBrowser

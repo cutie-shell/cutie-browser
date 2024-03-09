@@ -13,6 +13,7 @@ CutieWindow {
     title: qsTr("Browser")
 
     property string browserURL: ""
+    property string webAppUrl: ""
 
     initialPage: CutiePage {
         id: iPage
@@ -40,10 +41,11 @@ CutieWindow {
 
         Item { 
             id: headerBar
-            height: 44
+            height: webAppUrl=="" ? 44 : 0
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.right: parent.right
+            visible: webAppUrl==""
             Item {
                 id: backButton
                 width: 28
@@ -160,12 +162,12 @@ CutieWindow {
             settings.javascriptEnabled: true
             settings.autoLoadImages: true
             settings.accelerated2dCanvasEnabled: true
-            url: "https://start.duckduckgo.com"
+            url: webAppUrl=="" ? "https://start.duckduckgo.com" : iPage.fixUrl(webAppUrl)
             transformOrigin: Item.Center
             anchors.centerIn: parent
-            anchors.verticalCenterOffset: 23
+            anchors.verticalCenterOffset: webAppUrl=="" ? 23 : 0
             width: parent.width
-            height: parent.height - 46
+            height: webAppUrl=="" ? parent.height - 46 : parent.height
             
             profile: WebEngineProfile {
                 offTheRecord: false

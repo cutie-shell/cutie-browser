@@ -34,11 +34,6 @@ CutieWindow {
             else { return url;}
         }
 
-        FontLoader {
-            id: icon
-            source: "qrc:/fonts/Font Awesome 5 Free-Solid-900.otf"
-        }
-
         Item { 
             id: headerBar
             height: webAppUrl=="" ? 44 : 0

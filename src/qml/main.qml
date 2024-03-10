@@ -115,12 +115,12 @@ CutieWindow {
             }
             Rectangle {
                 id: urlProgressBar
-                height: 2
+                height: 3
                 visible: webview.loadProgress < 100
                 width: parent.width * (webview.loadProgress / 100)
                 anchors.top: headerBar.bottom
                 anchors.left: parent.left
-                color: (Atmosphere.variant == "dark") ? "#ffffff" : "#000000"
+                color: Atmosphere.textColor
             }
 
         }

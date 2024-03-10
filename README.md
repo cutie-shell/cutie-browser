@@ -7,7 +7,8 @@ The web browser app for Cutie UI.
 
 ## Building and installing
 
-```mkdir build
+```
+mkdir build
 cd build
 cmake ..
 make

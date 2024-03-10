@@ -19,14 +19,22 @@ int main(int argc, char *argv[])
 	parser.addHelpOption();
 
 	QCommandLineOption webAppOption(
-		QStringList() << "webappurl",
+		QStringList() << "a"
+			      << "webapp",
 		QCoreApplication::translate(
 			"main",
-			"The url to load. If not empty, browser starts without address bar and navigation buttons."),
-		QCoreApplication::translate("main", "url"));
+			"Start browser without address bar and navigation buttons."));
 	parser.addOption(webAppOption);
+	parser.addPositionalArgument(
+		"url",
+		QCoreApplication::translate("main", "URL to open, optionally."),
+		"[url]");
 	parser.process(app);
-	QString webAppUrl = parser.value(webAppOption);
+
+	bool webApp = parser.isSet(webAppOption);
+	QString urlToLoad;
+	if (!parser.positionalArguments().empty())
+		urlToLoad = parser.positionalArguments().first();
 
 	QQmlApplicationEngine engine;
 
@@ -40,9 +48,12 @@ int main(int argc, char *argv[])
 		Qt::QueuedConnection);
 	engine.load(url);
 
-	if (webAppUrl != "")
-		QQmlProperty(engine.rootObjects()[0], "webAppUrl")
-			.write(webAppUrl);
+	QQmlProperty(engine.rootObjects()[0], "webApp").write(webApp);
+	if (!urlToLoad.isEmpty())
+		QMetaObject::invokeMethod(
+			engine.rootObjects()[0], "browse",
+			Q_ARG(QVariant,
+			      QVariant::fromValue<QString>(urlToLoad)));
 
 	return app.exec();
 }

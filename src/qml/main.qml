@@ -13,34 +13,39 @@ CutieWindow {
     title: qsTr("Browser")
 
     property string browserURL: ""
-    property string webAppUrl: ""
+    property bool webApp: false
+
+    function fixUrl(url) {
+        url = url.replace( /^\s+/, "").replace( /\s+$/, ""); // remove white space
+        url = url.replace( /(<([^>]+)>)/ig, ""); // remove <b> tag 
+        if (url == "") return url;
+        if (url[0] == "/") { return "file://"+url; }
+        if (url[0] == '.') { 
+            var str = itemMap[currentTab].url.toString();
+            var n = str.lastIndexOf('/');
+            return str.substring(0, n)+url.substring(1);
+        }
+        //FIXME: search engine support here
+        if (url.startsWith('chrome://')) { return url; } 
+        if (url.indexOf('.') < 0) { return "https://duckduckgo.com/?q="+url; }
+        if (url.indexOf(":") < 0) { return "https://"+url; } 
+        else { return url;}
+    }
+
+    function browse(url) {
+        webview.url = fixUrl(url);
+    }
 
     initialPage: CutiePage {
         id: iPage
-        function fixUrl(url) {
-            url = url.replace( /^\s+/, "").replace( /\s+$/, ""); // remove white space
-            url = url.replace( /(<([^>]+)>)/ig, ""); // remove <b> tag 
-            if (url == "") return url;
-            if (url[0] == "/") { return "file://"+url; }
-            if (url[0] == '.') { 
-                var str = itemMap[currentTab].url.toString();
-                var n = str.lastIndexOf('/');
-                return str.substring(0, n)+url.substring(1);
-            }
-            //FIXME: search engine support here
-            if (url.startsWith('chrome://')) { return url; } 
-            if (url.indexOf('.') < 0) { return "https://duckduckgo.com/?q="+url; }
-            if (url.indexOf(":") < 0) { return "https://"+url; } 
-            else { return url;}
-        }
 
         Item { 
             id: headerBar
-            height: webAppUrl=="" ? 44 : 0
+            height: webApp ? 0 : 44
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             anchors.right: parent.right
-            visible: webAppUrl==""
+            visible: !webApp
             CutieButton {
                 id: backButton
                 width: 28
@@ -90,9 +95,7 @@ CutieWindow {
                     }
                 }
 
-                onAccepted: { 
-                    webview.url = iPage.fixUrl(urlText.text);
-                }
+                onAccepted: browse(text)
 
                 onFocusChanged: {
                     if (focus) urlFocusTimer.start();
@@ -148,12 +151,12 @@ CutieWindow {
             settings.javascriptEnabled: true
             settings.autoLoadImages: true
             settings.accelerated2dCanvasEnabled: true
-            url: webAppUrl=="" ? "https://start.duckduckgo.com" : iPage.fixUrl(webAppUrl)
+            url: "https://start.duckduckgo.com"
             transformOrigin: Item.Center
             anchors.centerIn: parent
-            anchors.verticalCenterOffset: webAppUrl=="" ? -23 : 0
+            anchors.verticalCenterOffset: -23 * !webApp
             width: parent.width
-            height: webAppUrl=="" ? parent.height - 46 : parent.height
+            height: parent.height -46 * !webApp
             
             profile: WebEngineProfile {
                 offTheRecord: false

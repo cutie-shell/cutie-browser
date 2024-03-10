@@ -42,7 +42,7 @@ CutieWindow {
         Item { 
             id: headerBar
             height: webAppUrl=="" ? 44 : 0
-            anchors.top: parent.top
+            anchors.bottom: parent.bottom
             anchors.left: parent.left
             anchors.right: parent.right
             visible: webAppUrl==""
@@ -156,7 +156,7 @@ CutieWindow {
             url: webAppUrl=="" ? "https://start.duckduckgo.com" : iPage.fixUrl(webAppUrl)
             transformOrigin: Item.Center
             anchors.centerIn: parent
-            anchors.verticalCenterOffset: webAppUrl=="" ? 23 : 0
+            anchors.verticalCenterOffset: webAppUrl=="" ? -23 : 0
             width: parent.width
             height: webAppUrl=="" ? parent.height - 46 : parent.height
             

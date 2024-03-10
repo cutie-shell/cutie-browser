@@ -46,53 +46,37 @@ CutieWindow {
             anchors.left: parent.left
             anchors.right: parent.right
             visible: webAppUrl==""
-            Item {
+            CutieButton {
                 id: backButton
                 width: 28
                 height: width
                 anchors.left: parent.left
                 anchors.leftMargin: 8
                 anchors.verticalCenter: parent.verticalCenter
-                CutieLabel {
-                    id: backButtonIcon
-                    text: "\uF053"
-                    font { 
-                        family: icon.name 
-                        pixelSize: 28
-                    }
-                    anchors.fill: parent
-                }
+                enabled: webview.canGoBack
+                background: null
+                icon.name: "go-previous-symbolic"
+                icon.color: Atmosphere.textColor
 
-                MouseArea {
-                    anchors.fill: parent
-                    anchors.margins: -4
-                    enabled: webview.canGoBack
-                    onClicked: { webview.goBack() }
+                onClicked: {
+                    webview.goBack()
                 }
             }
 
-            Item {
+            CutieButton {
                 id: forwardButton
                 width: 28
                 height: width
                 anchors.left: backButton.right
                 anchors.leftMargin: 8
                 anchors.verticalCenter: parent.verticalCenter
-                CutieLabel {
-                    id: backButtonIcon1
-                    text: "\uf054"
-                    font { 
-                        family: icon.name 
-                        pixelSize: 28
-                    }
-                    anchors.fill: parent
-                }
+                enabled: webview.canGoForward
+                background: null
+                icon.name: "go-next-symbolic"
+                icon.color: Atmosphere.textColor
 
-                MouseArea {
-                    anchors.fill: parent
-                    anchors.margins: -4
-                    enabled: webview.canGoForward
-                    onClicked: { webview.goForward() }
+                onClicked: {
+                    webview.goForward()
                 }
             }
 

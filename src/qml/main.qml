@@ -99,10 +99,17 @@ CutieWindow {
                     webview.url = iPage.fixUrl(urlText.text);
                 }
 
-                onActiveFocusChanged: { 
-                    if (urlText.activeFocus) {
+                onFocusChanged: {
+                    if (focus) urlFocusTimer.start();
+                }
+
+                Timer {
+                    id: urlFocusTimer
+                    interval: 0
+                    running: false
+                    repeat: false
+                    onTriggered: {
                         urlText.selectAll();
-                        Qt.inputMethod.show();
                     }
                 }
             }

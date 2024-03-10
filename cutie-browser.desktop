@@ -3,7 +3,7 @@
 Version=1.2
 Type=Application
 Name=Browser
-Exec=/usr/bin/env QTWEBENGINE_CHROMIUM_FLAGS=--disable-gpu-compositing /usr/bin/cutie-browser
+Exec=/usr/bin/cutie-browser
 TryExec=/usr/bin/cutie-browser
 Icon=cutie-browser
 Terminal=false
